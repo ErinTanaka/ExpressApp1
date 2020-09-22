@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    .log-form
+        h2 Sign up for an account
+        form
+            input(type='text', title='username', placeholder='username')
+            input(type='password', title='username', placeholder='password')
+            input(type='confpassword', title='username', placeholder='confpassword')
+            button.btn(type='submit') Login
+            a.forgot(href='/login-page') Already have an account?  
