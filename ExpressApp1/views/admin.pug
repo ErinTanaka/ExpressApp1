@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  h2#storage(hidden='')= Users 
+  a(href='/') 
+    button Logout
+
+  h3 Ah, the french!
+
+  form(action='/admin/test')
+  each val in User
+    label= val
+    input(type='checkbox', name=val, value=val)
+    br
+  br
+  br
+  input(type='submit', value='Submit')

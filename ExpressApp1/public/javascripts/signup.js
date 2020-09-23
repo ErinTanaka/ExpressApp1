@@ -32,43 +32,29 @@ module.exports = function () {
                 if (err) console.log(err);
                 // create Request object
                 var requestUser = new sql.Request();
-                var strquery = "select * from Logins where uname = '" + username + "'"
+                var strquery = "IF NOT EXISTS(SELECT * FROM Logins WHERE uname = '" + username + "')  BEGIN INSERT INTO Logins(uname, pswd) VALUES('" + username + "', '" + password + "') END";
                 console.log(strquery);
                 // query to the database and get the records
                 requestUser.query(strquery, function (err, recordset) {
                     if (err) console.log(err);
                     console.log("whats the length of the record set?");
-                    console.log(recordset.rowsAffected[0]);
-                    if (recordset.rowsAffected[0] == 0) {
-                        console.log("user doesn't exist");
-                        isUser = false;
+                    console.log(recordset);
+                    if (recordset.rowsAffected[0] === undefined) {
+                        console.log("its undefined?")
+                        res.redirect("/signup");
                     } else {
-                        console.log("user already exists");
-                        isUser = true;
+                        res.redirect("/welcome")
                     }
-                //    res.send(output);
+
                 });
-                
-                // query to the database to add record if necessary
-                console.log(isUser);
-                if (isUser == false) {
-                    console.log("gonna add it to db")
-                    var requestAdd = new sql.Request();
-                    strquery = "insert into Logins (uname, pswd) values ('" + username + "', '" + password + "'";
-                    requestAdd.query(strquery, function (err, recordset) {
-                        console.log(recordset);
-                    });
-                }
                 
              });
         } else {
             console.log("paswords dont match");
-            
+            res.redirect('/signup');
         }
 
-        console.log("last chance");
-        console.log(isUser)
-        res.redirect('/welcome');
+        
     });
 
     console.log('return signup');
