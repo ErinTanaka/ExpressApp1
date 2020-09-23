@@ -5,11 +5,11 @@ module.exports = function () {
     var router = express.Router();
 
     router.get('/', function (req, res) {
-        console.log("render index");
-        res.render('index', { title: 'Erin\'s DevOps Web App' });
+        console.log("render networkaccess");
+        res.render('networkaccess', { title: 'Erin\'s DevOps Web App: network access' });
     });
 
-    console.log('h');
+    
 
     return router;
 }();

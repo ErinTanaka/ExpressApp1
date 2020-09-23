@@ -1,0 +1,25 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/main.css')
+    body
+        h2 Sign up for an account
+        form(action='/signup/addaccount', method='POST')
+            label(for=username)
+                b Username
+            input(type='text', title='username', placeholder='Enter Username', required='', name = 'username')
+            br
+            label(for=password)
+                b Password
+            input(type='password', title='password', placeholder='Enter Password', required='', name = 'password')
+            br
+            label(for=confpassword)
+                b Confirm Password
+            input(type='password', title='confpassword', placeholder='Confirm Password', required='', name = 'confpassword')
+            br
+            button.btn(type='submit') Submit
+        a(href='/')
+            button Cancel
+        br
+        a(href='/login') Already have an account?  

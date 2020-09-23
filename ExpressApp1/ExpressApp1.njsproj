@@ -30,31 +30,36 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.js" />
-    <Content Include="dbcon.js" />
-    <Content Include="routes\index.js" />
-    <Content Include="routes\sign-up-page.js">
+    <Content Include="public\javascripts\networkaccess.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="routes\login-page.js">
+    <Content Include="routes\index.js" />
+    <Content Include="public\javascripts\login.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\javascripts\signup.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="routes\users.js" />
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
-    <Content Include="routes\welcome-page.js">
+    <Content Include="public\javascripts\welcome.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\index.pug" />
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />
-    <Content Include="views\login-page.pug">
+    <Content Include="views\login.pug">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="views\sign-up-page.pug">
+    <Content Include="views\networkaccess.pug">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="views\welcome-page.pug">
+    <Content Include="views\signup.pug">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\welcome.pug">
       <SubType>Code</SubType>
     </Content>
   </ItemGroup>

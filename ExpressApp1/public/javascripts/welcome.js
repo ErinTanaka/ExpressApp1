@@ -3,13 +3,13 @@
 module.exports = function () {
     var express = require('express');
     var router = express.Router();
-
+    console.log("welcome router");
     router.get('/', function (req, res) {
-        console.log("render index");
-        res.render('index', { title: 'Erin\'s DevOps Web App' });
+        console.log("render welcome");
+        res.render('welcome', { title: 'Erin\'s DevOps Web App: Welcome' });
     });
 
-    console.log('h');
+    console.log('returning welcome');
 
     return router;
 }();
