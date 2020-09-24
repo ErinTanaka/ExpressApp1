@@ -3,68 +3,48 @@
 module.exports = function () {
     var express = require('express');
     var router = express.Router();
-    function getallRequests(res, sql, context, complete) {
-        sql.query("select uname as 'User' from NetworkAccess where access = false", function (err, recordset) {
-            if (error) {
-                res.write(JSON.stringify(error));
-                res.end();
-            }
-            context.requests = results;
-            complete();
+
+    var sql = require("mssql");
+
+    var config = {
+        user: 'sa',
+        password: 'Password1234!',
+        server: '192.168.0.135',
+        database: 'devOpsLabDB'
+    };
+
+    function getAccessReqs() {
+        var connection = new sql.ConnectionPool(config, function (err) {
+            var request = new sql.Request(connection);
+            request.query("select uname from NetworkAccess where access = 'false'", function (err, res) {
+                console.log(res.recordset);
+                var tmp = res.recordset;
+                var item = tmp[0].unamame;
+                var mylist = [];
+                var i;
+                for (i = 0; i < tmp.length; i++) {
+                    mylist.push(tmp[i].uname);
+                }
+                //len = recordset.length;
+                //console.log(len);
+                //console.log(recordset[0])
+                //console.log(result.recordset.entries);
+                console.log(mylist);
+                return mylist;
+            });
         });
-        
     }
 
     router.get('/', function (req, res) {
         console.log("render welcome");
         console.log(req.session.username);
         
-        var callbackCount = 0;
-        
-        var context = {
+        var tmpcontext = {
             title: 'Erin\'s DevOps Web App: Admin', User: ['one', 'two'] };
-        //getallRequests(res, mssql, context, complete);
-        var sql = require("mssql");
-        var config = {
-            user: 'sa',
-            password: 'Password1234!',
-            server: '192.168.0.135',
-            database: 'devOpsLabDB'
-        };
-
-        function complete() {
-            callbackCount++;
-            if (callbackCount >= 1) {
-                res.render('admin', context);
-            }
-        }
-
-        sql.connect(config, function (err) {
-            sql.query("select uname as 'User' from NetworkAccess where access = false", function (err, recordset) {
-                if (error) {
-                    console.log(error);
-                }
-                
-                console.log("sqlquery");
-                console.log(recordset);
-                complete();
-                
-            });
-        });
-
-        //sql.query("select uname as 'User' from NetworkAccess where access = false", function (err, recordset) {
-        //    if (error) {
-        //        res.write(JSON.stringify(error));
-        //        res.end();
-        //    }
-        //    context.requests = results;
-        //    complete();
-        //});
+        var listy = getAccessReqs();
+        console.log("its listy"+listy);
         
-        //var listData = ['fuck', 'shit', 'crap'];
-        //res.render('admin', context);
-    
-        
+        res.render('admin', tmpcontext);      
     });
 
     
