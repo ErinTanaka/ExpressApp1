@@ -8,12 +8,22 @@ block content
     button Logout
 
   h3 Ah, the french!
-
-  form(action='/admin/test')
-  each val in User
-    label= val
-    input(type='checkbox', name=val, value=val)
+  
+  form(method='POST', action='/admin/grant')
+    table
+      each val in User
+        tr
+          td=val
+          td
+            input(type='checkbox', name=val)
+      
+    p
+    input(type='SUBMIT', value='Submit')
+  //form(action='/admin/grant', method = 'POST')
+    each val in User
+        label= val
+        input(type='checkbox', name=val, value=val)
+        br
     br
-  br
-  br
-  input(type='submit', value='Submit')
+    input(type='submit', value='Submit')
+ 

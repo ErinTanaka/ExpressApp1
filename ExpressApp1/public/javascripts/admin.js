@@ -13,38 +13,98 @@ module.exports = function () {
         database: 'devOpsLabDB'
     };
 
-    function getAccessReqs() {
+
+    function getAccessReqs(res, context, complete) {
         var connection = new sql.ConnectionPool(config, function (err) {
             var request = new sql.Request(connection);
             request.query("select uname from NetworkAccess where access = 'false'", function (err, res) {
                 console.log(res.recordset);
                 var tmp = res.recordset;
-                var item = tmp[0].unamame;
-                var mylist = [];
-                var i;
-                for (i = 0; i < tmp.length; i++) {
-                    mylist.push(tmp[i].uname);
+                console.log(tmp);
+                if (tmp === undefined || tmp.length == 0) {
+                    // array empty or does not exist
+                    console.log("this works");
+                    context.User = tmp;
+
+                } else {
+                    var mylist = [];
+                    var i;
+                    for (i = 0; i < tmp.length; i++) {
+                        mylist.push(tmp[i].uname);
+                    }
+                    //len = recordset.length;
+                    //console.log(len);
+                    //console.log(recordset[0])
+                    //console.log(result.recordset.entries);
+                    console.log(mylist);
+                    context.User = mylist;
                 }
-                //len = recordset.length;
-                //console.log(len);
-                //console.log(recordset[0])
-                //console.log(result.recordset.entries);
-                console.log(mylist);
-                return mylist;
+                
+                complete();
             });
         });
     }
 
     router.get('/', function (req, res) {
-        console.log("render welcome");
+        console.log("render admin");
         console.log(req.session.username);
-        
+        var callbackCount = 0;
+
         var tmpcontext = {
             title: 'Erin\'s DevOps Web App: Admin', User: ['one', 'two'] };
-        var listy = getAccessReqs();
-        console.log("its listy"+listy);
+
+        var context = { title: 'Erin\'s DevOps Web App: Admin' };
+
+        getAccessReqs(res, context, complete);
         
-        res.render('admin', tmpcontext);      
+
+        function complete() {
+            callbackCount++;
+            if (callbackCount >= 1) {
+                res.render('admin', context);
+            }
+        }
+
+        //res.render('admin', tmpcontext);      
+    });
+
+    router.post('/grant', function (req, res) {
+        console.log("grant?");
+        console.log(req.body);
+        console.log("doon");
+        var keys = Object.keys(req.body);
+        //build my query to update table
+        var dynamicquery = "";
+        for (var i = 0; i < keys.length; i++) {
+            console.log(i);
+            if (i == 0) {
+                var tmp = "uname = '" + keys[i] + "' "
+                console.log(tmp);
+                dynamicquery = dynamicquery.concat(tmp);
+                console.log(dynamicquery);
+            } else {
+                var tmp = "OR uname = '" + keys[i] + "' "
+                console.log(tmp);
+                dynamicquery = dynamicquery.concat(tmp);
+                console.log(dynamicquery);
+            }
+        }
+        console.log("done with my dum qurey builder");
+        console.log(dynamicquery);
+        if (dynamicquery != "") {
+            console.log("lets go");
+            var strquery = "update NetworkAccess set access = 'true' where " + dynamicquery
+
+            sql.connect(config, function (err) {
+                if (err) console.log(err);
+                var myreq = new sql.Request();
+                myreq.query(strquery, function (err, recordset) {
+                    if (err) console.log(err);
+                    console.log(recordset);
+                    res.redirect('/admin');
+                });
+            });
+        }
     });
 
     
