@@ -50,8 +50,8 @@ module.exports = function () {
         console.log(req.session.username);
         var callbackCount = 0;
 
-        var tmpcontext = {
-            title: 'Erin\'s DevOps Web App: Admin', User: ['one', 'two'] };
+        //var tmpcontext = {
+        //    title: 'Erin\'s DevOps Web App: Admin', User: ['one', 'two'] };
 
         var context = { title: 'Erin\'s DevOps Web App: Admin' };
 
