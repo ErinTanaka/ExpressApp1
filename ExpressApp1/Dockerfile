@@ -1,6 +1,6 @@
 FROM node:12
 WORKDIR /usr/src/app
-COPY package*.json ./
+COPY /ExpressApp1/package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 8080
