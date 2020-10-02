@@ -3,7 +3,8 @@
 module.exports = function () {
     var express = require('express');
     var router = express.Router();
-
+    var bcrypt = require('bcrypt');
+    var saltRounds = 10;
     router.get('/', function (req, res) {
         console.log("render login");
         console.log(req.sessionID);
@@ -26,7 +27,7 @@ module.exports = function () {
             if (err) console.log(err);
             // create Request object
             var request = new sql.Request();
-            var strquery = "select * from Logins where uname = '" + username + "' and pswd = '" + password + "'";
+            var strquery = "select pswd from Logins where uname = '" + username + "'";
             console.log(strquery);
             // query to the database and get the records
             request.query(strquery, function (err, recordset) {
@@ -37,21 +38,25 @@ module.exports = function () {
                     console.log("user doesn't exist");
                     res.redirect('/login');
                 } else {
-                    console.log("user in db");
-                    req.session.loggedin = true;
-                    req.session.username = username;
-                    if (username == 'admin') {
-                        res.redirect('/admin')
+                    console.log("user in db hased pswd is: ");
+                    console.log(recordset.recordset[0].pswd);
+                    var rethash =  recordset.recordset[0].pswd;
+                    var match = bcrypt.compareSync(password, rethash);
+                    console.log(match);
+                    if (match) {
+                        req.session.loggedin = true;
+                        req.session.username = username;
+                        if (username == 'admin') {
+                            res.redirect('/admin')
+                        } else {
+                            res.redirect('/welcome');
+                        }
                     } else {
-                        res.redirect('/welcome');
+                        res.redirect('/login');
                     }
+                    
                 }
-                //    res.send(output);
             });
-
-            // query to the database to add record if necessary
-         
-
         });
 
         //res.redirect('/');

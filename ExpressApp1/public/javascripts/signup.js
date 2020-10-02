@@ -2,7 +2,7 @@
 module.exports = function () {
     var express = require('express');
     var router = express.Router();
-
+    var bcrypt = require('bcrypt');
     console.log("signup router")
 
     router.get('/', function (req, res) {
@@ -28,11 +28,14 @@ module.exports = function () {
 
         if (password == confpassword) {
             console.log("Passwords match");
+            //encrypt the passwords
+            var saltRounds = 10
+            const hash = bcrypt.hashSync(password, saltRounds);
             sql.connect(config, function (err) {
                 if (err) console.log(err);
                 // create Request object
                 var requestUser = new sql.Request();
-                var strquery = "IF NOT EXISTS(SELECT * FROM Logins WHERE uname = '" + username + "')  BEGIN INSERT INTO Logins(uname, pswd) VALUES('" + username + "', '" + password + "') END";
+                var strquery = "IF NOT EXISTS(SELECT * FROM Logins WHERE uname = '" + username + "')  BEGIN INSERT INTO Logins(uname, pswd) VALUES('" + username + "', '" + hash.toString() + "') END";
                 console.log(strquery);
                 // query to the database and get the records
                 requestUser.query(strquery, function (err, recordset) {
