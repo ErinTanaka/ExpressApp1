@@ -35,8 +35,10 @@ module.exports = function () {
                 if (err) console.log(err);
                 // create Request object
                 var requestUser = new sql.Request();
+
                 var strquery = "IF NOT EXISTS(SELECT * FROM Logins WHERE uname = '" + username + "')  BEGIN INSERT INTO Logins(uname, pswd) VALUES('" + username + "', '" + hash.toString() + "') END";
                 console.log(strquery);
+
                 // query to the database and get the records
                 requestUser.query(strquery, function (err, recordset) {
                     if (err) console.log(err);
@@ -46,7 +48,7 @@ module.exports = function () {
                         console.log("its undefined?")
                         res.redirect("/signup");
                     } else {
-                        res.redirect("/welcome")
+                        res.redirect("/login")
                     }
 
                 });

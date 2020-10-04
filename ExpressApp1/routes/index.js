@@ -1,5 +1,5 @@
 'use strict';
-console.log("global variables?");
+
 //console.log(sqltestconfig);
 module.exports = function () {
     var express = require('express');

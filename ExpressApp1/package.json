@@ -6,9 +6,7 @@
     "start": "node app"
   },
   "description": "ExpressApp1",
-  "author": {
-    "name": ""
-  },
+  "author": "",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.15.0",
@@ -17,11 +15,13 @@
     "express": "^4.14.0",
     "express-session": "^1.17.1",
     "morgan": "^1.7.0",
-    "mssql": "^6.2.2",
+    "mssql": "^6.2.3",
     "mysql": "^2.18.1",
     "pem": "^1.14.4",
     "pug": "^2.0.0-beta6",
     "selfsigned": "^1.10.8",
     "serve-favicon": "^2.3.0"
-  }
+  },
+  "main": "app.js",
+  "license": "ISC"
 }
