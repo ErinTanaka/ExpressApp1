@@ -33,6 +33,9 @@
     <Content Include="public\javascripts\admin.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="public\javascripts\resetpassword.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="public\javascripts\networkaccess.js">
       <SubType>Code</SubType>
     </Content>
@@ -60,6 +63,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\networkaccess.pug">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\resetpassword.pug">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\signup.pug">
