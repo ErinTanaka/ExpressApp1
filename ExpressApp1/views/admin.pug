@@ -7,10 +7,15 @@ block content
   a(href='/') 
     button Logout
 
+
   h3 Grant Network Access to:
+
   
   form(method='POST', action='/admin/grant')
     table
+      tr 
+        td Username
+        td access
       each val in User
         tr
           td=val

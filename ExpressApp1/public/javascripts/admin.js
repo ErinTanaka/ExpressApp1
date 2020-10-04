@@ -50,22 +50,16 @@ module.exports = function () {
         console.log(req.session.username);
         var callbackCount = 0;
 
-        //var tmpcontext = {
-        //    title: 'Erin\'s DevOps Web App: Admin', User: ['one', 'two'] };
-
         var context = { title: 'Erin\'s DevOps Web App: Admin' };
 
         getAccessReqs(res, context, complete);
-        
 
         function complete() {
             callbackCount++;
             if (callbackCount >= 1) {
                 res.render('admin', context);
             }
-        }
-
-        //res.render('admin', tmpcontext);      
+        }    
     });
 
     router.post('/grant', function (req, res) {
@@ -89,7 +83,6 @@ module.exports = function () {
                 console.log(dynamicquery);
             }
         }
-        console.log("done with my dum qurey builder");
         console.log(dynamicquery);
         if (dynamicquery != "") {
             console.log("lets go");
