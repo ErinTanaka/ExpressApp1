@@ -104,10 +104,10 @@ app.use(function (err, req, res, next) {
 app.set('port', process.env.PORT || 8080);
 
 var insecureserver = app.listen(app.get('port'), function () {
-    debug('Express server listening on port ' + server.address().port);
+    debug('Express server listening on port ' + insecureserver.address().port);
 });
 
-var port = 8080
+var port = 8081
 var server = https.createServer(options, app).listen(port, function(){
   console.log("Express server listening on port " + port);
 });
