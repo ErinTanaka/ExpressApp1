@@ -44,7 +44,7 @@ var pems = generate({
 }, {
   keySize: 1024, // default
   expire: 2 * 365 * 24 * 60 * 60 * 1000, // defaults to exactly 1 year
-  alt: ['192.168.0.152', 'https://localhost:8765', '192.168.0.198', '192.168.0.198:8765']
+  alt: ['192.168.0.198', 'https://localhost:8765', 'https://192.168.0.198:8765']
 });
 console.log(pems);
 var options = {
