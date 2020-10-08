@@ -13,20 +13,44 @@ var morgan = require('morgan');
 var https = require('https');
 
 
-var selfsigned = require('selfsigned');
-var attrs = [{ name: 'commonName', value: 'https://192.168.0.164:8080' }];
-var pems = selfsigned.generate(attrs, { days: 365 });
+//var selfsigned = require('selfsigned');
+// var attrs = [{ name: 'commonName', value: 'https://192.168.0.164:8765', subjectAltName: 'bob' }];
+// var pems = selfsigned.generate(attrs, { days: 365 });
+// console.log(pems);
+//   var options = keypair({
+//     name: 'localhost',
+//     city: 'Eugene',
+//     state: 'Oregon',
+//     organization: 'Test',
+//     unit: 'Test'
+//   }, {
+//     alt: ['127.0.0.1', '192.168.0.1234']
+//   });
+
+// var options = {
+//     key: pems.private,
+//     cert: pems.cert,
+
+// };
+
+// console.log(options);
+var generate = require('self-signed');
+var pems = generate({
+  name: 'localhost',
+  city: 'Blacksburg',
+  state: 'Virginia',
+  organization: 'Test',
+  unit: 'Test'
+}, {
+  keySize: 1024, // default
+  expire: 2 * 365 * 24 * 60 * 60 * 1000, // defaults to exactly 1 year
+  alt: ['192.168.0.152']
+});
 console.log(pems);
 var options = {
     key: pems.private,
     cert: pems.cert,
-
 };
-
-console.log(options);
-
-
-
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -101,13 +125,13 @@ app.use(function (err, req, res, next) {
     });
 });
 
-app.set('port', process.env.PORT || 8080);
+app.set('port', process.env.PORT || 8000);
 
-var insecureserver = app.listen(app.get('port'), function () {
-    debug('Express server listening on port ' + insecureserver.address().port);
+var server = app.listen(app.get('port'), function () {
+    console.log('HTTP Express server listening on port ' + server.address().port);
 });
 
-var port = 8081
-var server = https.createServer(options, app).listen(port, function(){
-  console.log("Express server listening on port " + port);
+var port = 8765
+var secureserver = https.createServer(options, app).listen(port, function(){
+  console.log("HTTPS Express server listening on port " + port);
 });
