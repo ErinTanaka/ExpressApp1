@@ -36,7 +36,7 @@ var https = require('https');
 // console.log(options);
 var generate = require('self-signed');
 var pems = generate({
-  name: 'localhost',
+  name: 'localhost:8765',
   city: 'Blacksburg',
   state: 'Virginia',
   organization: 'Test',
@@ -44,7 +44,7 @@ var pems = generate({
 }, {
   keySize: 1024, // default
   expire: 2 * 365 * 24 * 60 * 60 * 1000, // defaults to exactly 1 year
-  alt: ['192.168.0.152']
+  alt: ['192.168.0.152', 'https://localhost:8765']
 });
 console.log(pems);
 var options = {
