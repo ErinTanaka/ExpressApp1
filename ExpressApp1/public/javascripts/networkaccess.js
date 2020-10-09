@@ -15,7 +15,8 @@ module.exports = function () {
         var connection = new sql.ConnectionPool(config, function (err) {
             var request = new sql.Request(connection);
             var query = "Update NetworkAccess Set access='false' Where uname = '" + context.uname + "';";
-            request.query(query, function (err, res) {
+            var ifelsequery = "IF NOT EXISTS(SELECT * FROM NetworkAccess WHERE uname = '" + context.uname + "') BEGIN INSERT INTO NetworkAccess(uname, access) VALUES('" + context.uname + "', 'false')END ELSE UPDATE NetworkAccess SET access = 'false' WHERE uname = '" + context.uname + "';";
+            request.query(ifelsequery, function (err, res) {
                 complete();
             });
         });
