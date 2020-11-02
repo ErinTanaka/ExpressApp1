@@ -14,7 +14,7 @@ var https = require('https');
 
 
 //var selfsigned = require('selfsigned');
-// var attrs = [{ name: 'commonName', value: 'https://192.168.0.161:8765', subjectAltName: 'bob' }];
+// var attrs = [{ name: 'commonName', value: 'https://192.168.0.164:8765', subjectAltName: 'bob' }];
 // var pems = selfsigned.generate(attrs, { days: 365 });
 // console.log(pems);
 //   var options = keypair({
@@ -44,7 +44,7 @@ var pems = generate({
 }, {
   keySize: 1024, // default
   expire: 2 * 365 * 24 * 60 * 60 * 1000, // defaults to exactly 1 year
-  alt: ['192.168.0.161', '192.168.0.164', 'https://localhost:8765', 'https://192.168.0.161:8765', 'https://192.168.0.164:8765']
+  alt: ['192.168.0.164', '192.168.0.198', 'https://localhost:8765', 'https://192.168.0.198:8765', 'https://192.168.0.164:8765']
 });
 console.log(pems);
 var options = {
